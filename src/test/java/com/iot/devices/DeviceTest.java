@@ -24,8 +24,10 @@ public class DeviceTest {
 
     @Test
     public void testReplyWithLatestTemperatureReading() {
+        // 模拟一个发送方Actor
         TestProbe<Device.TemperatureRecorded> recordProbe =
                 testKit.createTestProbe(Device.TemperatureRecorded.class);
+        // 模拟一个发送方Actor
         TestProbe<Device.RespondTemperature> readProbe =
                 testKit.createTestProbe(Device.RespondTemperature.class);
         ActorRef<Device.Command> deviceActor = testKit.spawn(Device.create("group", "device"));
