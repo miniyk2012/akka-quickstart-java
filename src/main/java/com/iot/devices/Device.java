@@ -53,6 +53,10 @@ public class Device extends AbstractBehavior<Device.Command> {
         }
     }
 
+    enum Passivate implements Command {
+        INSTANCE
+    }
+
     // 响应体, 包含温度信息, 可为空(Optional)
     public static final class RespondTemperature {
         final long requestId;
@@ -85,6 +89,7 @@ public class Device extends AbstractBehavior<Device.Command> {
         return newReceiveBuilder()
                 .onMessage(ReadTemperature.class, this::onReadTemperature)
                 .onMessage(RecordTemperature.class, this::onRecordTemperature)
+                .onMessage(Passivate.class, m -> Behaviors.stopped())  // 测试用例当中发出该消息, 可以关闭Device
                 .onSignal(PostStop.class, signal -> onPostStop())
                 .build();
     }
@@ -105,7 +110,4 @@ public class Device extends AbstractBehavior<Device.Command> {
         getContext().getLog().info("Device actor {}-{} stopped", groupId, deviceId);
         return Behaviors.stopped();
     }
-
-
-
 }
