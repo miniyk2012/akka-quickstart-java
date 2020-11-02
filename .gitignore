@@ -9,5 +9,5 @@ target/
 
 .metals
 .bloop
-.idea
-
+.gradle
+build
