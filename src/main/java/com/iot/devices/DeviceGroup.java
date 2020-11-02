@@ -10,7 +10,6 @@ import akka.actor.typed.javadsl.Receive;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class DeviceGroup extends AbstractBehavior<DeviceGroup.Command> {
 
@@ -70,8 +69,7 @@ public class DeviceGroup extends AbstractBehavior<DeviceGroup.Command> {
     private Behavior<Command> onTrackDevice(DeviceManager.RequestTrackDevice trackMsg) {
         if (this.groupId.equals(trackMsg.groupId)) {
             ActorRef<Device.Command> deviceActor = deviceIdToActor.get(trackMsg.deviceId);
-            if (deviceActor != null) {
-            } else {
+            if (deviceActor == null) {
                 getContext().getLog().info("Creating device actor for {}", trackMsg.deviceId);
                 deviceActor = getContext().spawn(Device.create(groupId, trackMsg.deviceId), "device-" + trackMsg.deviceId);
                 getContext().watchWith(deviceActor, new DeviceTerminated(deviceActor, groupId, trackMsg.deviceId));  // 当Device stop时, 会往Group发DeviceTerminated

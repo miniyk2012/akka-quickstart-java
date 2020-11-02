@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">1</div>
+<div class="counter">7</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.058s</div>
+<div class="counter">0.234s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,8 +81,38 @@
 </tr>
 </thead>
 <tr>
+<td class="success">testIgnoreWrongRegistrationRequests</td>
+<td class="success">0.104s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testListActiveDevices</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
 <td class="success">testListActiveDevicesAfterOneShutsDown</td>
-<td class="success">0.058s</td>
+<td class="success">0.053s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testReplyToRegistrationRequests</td>
+<td class="success">0.051s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testReplyWithEmptyReadingIfNoTemperatureIsKnown</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testReplyWithLatestTemperatureReading</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testReturnSameActorForSameDeviceId</td>
+<td class="success">0.007s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -90,16 +120,48 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>[2020-11-02 17:47:25,664] [INFO] [akka.event.slf4j.Slf4jLogger] [DeviceTest-akka.actor.default-dispatcher-3] [] - Slf4jLogger started
-[2020-11-02 17:47:25,710] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-6] [akka://DeviceTest/user/$a] - DeviceGroup group started
-[2020-11-02 17:47:25,718] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-6] [akka://DeviceTest/user/$a] - Creating device actor for device1
-[2020-11-02 17:47:25,721] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-3] [akka://DeviceTest/user/$a/device-device1] - Device actor group-device1 started
-[2020-11-02 17:47:25,723] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-5] [akka://DeviceTest/user/$a] - Creating device actor for device2
-[2020-11-02 17:47:25,726] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-6] [akka://DeviceTest/user/$a/device-device2] - Device actor group-device2 started
-[2020-11-02 17:47:25,739] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-6] [akka://DeviceTest/user/$a/device-device2] - Device actor group-device2 stopped
-[2020-11-02 17:47:25,746] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-3] [akka://DeviceTest/user/$a] - Device actor for device2 has been terminated
-[2020-11-02 17:47:25,794] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-6] [akka://DeviceTest/user/$a/device-device1] - Device actor group-device1 stopped
-[2020-11-02 17:47:25,794] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-6] [akka://DeviceTest/user/$a] - DeviceGroup group stopped
+<pre>[2020-11-02 18:04:16,468] [INFO] [akka.event.slf4j.Slf4jLogger] [DeviceTest-akka.actor.default-dispatcher-3] [] - Slf4jLogger started
+[2020-11-02 18:04:16,512] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$a] - DeviceGroup group started
+[2020-11-02 18:04:16,519] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$a] - Creating device actor for device1
+[2020-11-02 18:04:16,521] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-3] [akka://DeviceTest/user/$a/device-device1] - Device actor group-device1 started
+[2020-11-02 18:04:16,524] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-6] [akka://DeviceTest/user/$a] - Creating device actor for device2
+[2020-11-02 18:04:16,524] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$a/device-device2] - Device actor group-device2 started
+[2020-11-02 18:04:16,536] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-3] [akka://DeviceTest/user/$a/device-device2] - Device actor group-device2 stopped
+[2020-11-02 18:04:16,542] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$a] - Device actor for device2 has been terminated
+[2020-11-02 18:04:16,548] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-3] [akka://DeviceTest/user/$b] - DeviceGroup group started
+[2020-11-02 18:04:16,549] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-3] [akka://DeviceTest/user/$b] - Creating device actor for device
+[2020-11-02 18:04:16,550] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$b/device-device] - Device actor group-device started
+[2020-11-02 18:04:16,555] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/undertest] - Device actor group-device started
+[2020-11-02 18:04:16,566] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-8] [akka://DeviceTest/user/$c] - DeviceGroup group started
+[2020-11-02 18:04:16,577] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-8] [akka://DeviceTest/user/$c] - Creating device actor for device
+[2020-11-02 18:04:16,578] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-8] [akka://DeviceTest/user/$c/device-device] - Device actor group-device started
+[2020-11-02 18:04:16,581] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$c] - Creating device actor for device3
+[2020-11-02 18:04:16,582] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$c/device-device3] - Device actor group-device3 started
+[2020-11-02 18:04:16,590] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$c/device-device] - Recorded temperature reading 1.0 with 0
+[2020-11-02 18:04:16,594] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-6] [akka://DeviceTest/user/$c/device-device3] - Recorded temperature reading 2.0 with 1
+[2020-11-02 18:04:16,615] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$d] - DeviceGroup group started
+[2020-11-02 18:04:16,616] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$d] - Creating device actor for device1
+[2020-11-02 18:04:16,617] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$d/device-device1] - Device actor group-device1 started
+[2020-11-02 18:04:16,620] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$d] - Creating device actor for device2
+[2020-11-02 18:04:16,621] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$d/device-device2] - Device actor group-device2 started
+[2020-11-02 18:04:16,626] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$e] - Device actor group-device started
+[2020-11-02 18:04:16,626] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$e] - Recorded temperature reading 24.0 with 1
+[2020-11-02 18:04:16,627] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$e] - Recorded temperature reading 55.0 with 3
+[2020-11-02 18:04:16,630] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$f] - DeviceGroup group started
+[2020-11-02 18:04:16,631] [WARN] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$f] - Ignoring TrackDevice request for wrongGroup. This actor is responsible for group.
+[2020-11-02 18:04:16,780] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-8] [akka://DeviceTest/user/$a/device-device1] - Device actor group-device1 stopped
+[2020-11-02 18:04:16,781] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-10] [akka://DeviceTest/user/$d/device-device1] - Device actor group-device1 stopped
+[2020-11-02 18:04:16,781] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-10] [akka://DeviceTest/user/$d/device-device2] - Device actor group-device2 stopped
+[2020-11-02 18:04:16,781] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-8] [akka://DeviceTest/user/$a] - DeviceGroup group stopped
+[2020-11-02 18:04:16,781] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-10] [akka://DeviceTest/user/$d] - DeviceGroup group stopped
+[2020-11-02 18:04:16,782] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$c/device-device] - Device actor group-device stopped
+[2020-11-02 18:04:16,782] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-11] [akka://DeviceTest/user/$c/device-device3] - Device actor group-device3 stopped
+[2020-11-02 18:04:16,783] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-7] [akka://DeviceTest/user/$c] - DeviceGroup group stopped
+[2020-11-02 18:04:16,783] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$e] - Device actor group-device stopped
+[2020-11-02 18:04:16,783] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-6] [akka://DeviceTest/user/$b/device-device] - Device actor group-device stopped
+[2020-11-02 18:04:16,783] [INFO] [com.iot.devices.Device] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/undertest] - Device actor group-device stopped
+[2020-11-02 18:04:16,783] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-9] [akka://DeviceTest/user/$b] - DeviceGroup group stopped
+[2020-11-02 18:04:16,783] [INFO] [com.iot.devices.DeviceGroup] [DeviceTest-akka.actor.default-dispatcher-12] [akka://DeviceTest/user/$f] - DeviceGroup group stopped
 </pre>
 </span>
 </div>
@@ -120,7 +182,7 @@ SLF4J: See also http://www.slf4j.org/codes.html#replay
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 5.2.1</a> at 2020-11-2 17:47:25</p>
+<a href="http://www.gradle.org">Gradle 5.2.1</a> at 2020-11-2 18:04:16</p>
 </div>
 </div>
 </body>

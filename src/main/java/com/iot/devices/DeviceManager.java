@@ -8,6 +8,9 @@ import akka.actor.typed.javadsl.ActorContext;
 import akka.actor.typed.javadsl.Behaviors;
 import akka.actor.typed.javadsl.Receive;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class DeviceManager extends AbstractBehavior<DeviceManager.Command> {
@@ -62,15 +65,72 @@ public class DeviceManager extends AbstractBehavior<DeviceManager.Command> {
             this.ids = ids;
         }
     }
+    // 终止Group的消息, 无须回复
+    private static class DeviceGroupTerminated implements DeviceManager.Command {
+        public final String groupId;
 
+        DeviceGroupTerminated(String groupId) {
+            this.groupId = groupId;
+        }
+    }
+
+    public static Behavior<Command> create() {
+        return Behaviors.setup(DeviceManager::new);
+    }
+
+    // 保存所有Group Actor
+    private final Map<String, ActorRef<DeviceGroup.Command>> groupIdToActor = new HashMap<>();
 
     public DeviceManager(ActorContext<Command> context) {
         super(context);
+        context.getLog().info("DeviceManager started");
     }
 
     @Override
     public Receive<Command> createReceive() {
-        return null;
+        return newReceiveBuilder()
+                .onMessage(RequestTrackDevice.class, this::onTrackDevice)
+                .onMessage(RequestDeviceList.class, this::onRequestDeviceList)
+                .onMessage(DeviceGroupTerminated.class, this::onTerminated)
+                .onSignal(PostStop.class, signal -> onPostStop())
+                .build();
+    }
+
+    private Behavior<Command> onPostStop() {
+        getContext().getLog().info("DeviceManager stopped");
+        return this;
+    }
+
+    private Behavior<Command> onTerminated(DeviceGroupTerminated t) {
+        getContext().getLog().info("Device group actor for {} has been terminated", t.groupId);
+        groupIdToActor.remove(t.groupId);
+        return this;
+    }
+
+    private Behavior<Command> onRequestDeviceList(RequestDeviceList request) {
+        ActorRef<DeviceGroup.Command> ref = groupIdToActor.get(request.groupId);
+        if (ref != null) {
+            ref.tell(request);  // 透传给Group, Group会直接回复给request.replyTo
+        } else {
+            request.replyTo.tell(new ReplyDeviceList(request.requestId, Collections.emptySet()));
+        }
+        return this;
+    }
+
+    private Behavior<Command> onTrackDevice(RequestTrackDevice trackMsg) {
+        String groupId = trackMsg.groupId;
+        ActorRef<DeviceGroup.Command> ref = groupIdToActor.get(groupId);
+        if (ref != null) {
+            ref.tell(trackMsg);
+        }else {
+            getContext().getLog().info("Creating device group actor for {}", groupId);
+            ActorRef<DeviceGroup.Command> groupActor =
+                    getContext().spawn(DeviceGroup.create(groupId), "group-" + groupId);
+            getContext().watchWith(groupActor, new DeviceGroupTerminated(groupId));
+            groupActor.tell(trackMsg);
+            groupIdToActor.put(groupId, groupActor);
+        }
+        return this;
     }
 
 }
